@@ -3,6 +3,7 @@ import { createReducer } from '@reduxjs/toolkit';
 export const userReducer = createReducer(
   {},
   {
+    // Login reducer
     loginRequest: state => {
       state.loading = true;
     },
@@ -18,6 +19,7 @@ export const userReducer = createReducer(
       state.error = action.payload;
     },
 
+    // Register reducer
     registerRequest: state => {
       state.loading = true;
     },
@@ -33,6 +35,7 @@ export const userReducer = createReducer(
       state.error = action.payload;
     },
 
+    // Get My Profile reducer
     loadUserRequest: state => {
       state.loading = true;
     },
@@ -47,6 +50,7 @@ export const userReducer = createReducer(
       state.error = action.payload;
     },
 
+    // Logout reducer
     logoutRequest: state => {
       state.loading = true;
     },
@@ -62,6 +66,59 @@ export const userReducer = createReducer(
       state.error = action.payload;
     },
 
+    // Clear reducer
+    clearError: state => {
+      state.error = null;
+    },
+    clearMessage: state => {
+      state.message = null;
+    },
+  }
+);
+
+export const profileReducer = createReducer(
+  {},
+  {
+    // Update Profile Reducer
+    updateProfileRequest: state => {
+      state.loading = true;
+    },
+    updateProfileSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload;
+    },
+    updateProfileFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
+    // Update Profile Picture Reducer
+    updateProfilePictureRequest: state => {
+      state.loading = true;
+    },
+    updateProfilePictureSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload;
+    },
+    updateProfilePictureFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
+    // Change Password Reducer
+    changePasswordRequest: state => {
+      state.loading = true;
+    },
+    changePasswordSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload;
+    },
+    changePasswordFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
+    // Clear reducer
     clearError: state => {
       state.error = null;
     },
