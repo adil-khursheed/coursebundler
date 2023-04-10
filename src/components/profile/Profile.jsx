@@ -14,19 +14,23 @@ import React, { useEffect } from 'react';
 import { RiDeleteBin7Fill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import ChangePhotoBox from './ChangePhotoBox';
-import { updateProfilePicture } from '../../redux/actions/profileAction';
+import {
+  removeFromPlaylist,
+  updateProfilePicture,
+} from '../../redux/actions/profileAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMyProfile } from '../../redux/actions/userAction';
 import { toast } from 'react-hot-toast';
 
 const Profile = ({ user }) => {
-  const removeFromPlaylistHandler = id => {
-    console.log(id);
-  };
-
   const dispatch = useDispatch();
 
   const { loading, message, error } = useSelector(state => state.profile);
+
+  const removeFromPlaylistHandler = async id => {
+    await dispatch(removeFromPlaylist(id));
+    dispatch(getMyProfile());
+  };
 
   const changeImageSubmitHandler = async (e, image) => {
     e.preventDefault();
@@ -130,7 +134,10 @@ const Profile = ({ user }) => {
                   </Button>
                 </Link>
 
-                <Button onClick={() => removeFromPlaylistHandler(elem.course)}>
+                <Button
+                  isLoading={loading}
+                  onClick={() => removeFromPlaylistHandler(elem.course)}
+                >
                   <RiDeleteBin7Fill />
                 </Button>
               </HStack>
