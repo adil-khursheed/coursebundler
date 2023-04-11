@@ -21,11 +21,17 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { getMyProfile } from '../../redux/actions/userAction';
 import { toast } from 'react-hot-toast';
+import { cancelSubscription } from '../../redux/actions/subscriptionAction';
 
 const Profile = ({ user }) => {
   const dispatch = useDispatch();
 
   const { loading, message, error } = useSelector(state => state.profile);
+  const {
+    loading: subscriptionLoading,
+    message: subscriptionMessage,
+    error: subscriptionError,
+  } = useSelector(state => state.subscription);
 
   const removeFromPlaylistHandler = async id => {
     await dispatch(removeFromPlaylist(id));
@@ -43,6 +49,10 @@ const Profile = ({ user }) => {
     dispatch(getMyProfile());
   };
 
+  const cancelSubscriptionHandler = () => {
+    dispatch(cancelSubscription());
+  };
+
   useEffect(() => {
     if (error) {
       toast.error(error);
@@ -52,7 +62,16 @@ const Profile = ({ user }) => {
       toast.success(message);
       dispatch({ type: 'clearMessage' });
     }
-  }, [dispatch, error, message]);
+    if (subscriptionError) {
+      toast.error(subscriptionError);
+      dispatch({ type: 'clearError' });
+    }
+    if (subscriptionMessage) {
+      toast.success(subscriptionMessage);
+      dispatch({ type: 'clearMessage' });
+      dispatch(getMyProfile());
+    }
+  }, [dispatch, error, message, subscriptionError, subscriptionMessage]);
 
   const { isOpen, onClose, onOpen } = useDisclosure();
 
@@ -92,7 +111,12 @@ const Profile = ({ user }) => {
             <HStack>
               <Text children="Subscription" fontWeight={'bold'} />
               {user.subscription && user.subscription.status === 'active' ? (
-                <Button color={'yellow.500'} variant="unstyled">
+                <Button
+                  onClick={cancelSubscriptionHandler}
+                  color={'yellow.500'}
+                  variant="unstyled"
+                  isLoading={subscriptionLoading}
+                >
                   Cancel Subscription
                 </Button>
               ) : (

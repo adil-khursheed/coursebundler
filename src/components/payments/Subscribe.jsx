@@ -23,8 +23,10 @@ const Subscribe = ({ user }) => {
   );
 
   const subscribeHandler = async () => {
-    const { data } = await axios.get(`${server}/razorpaykey`);
-    setKey(data.key);
+    const {
+      data: { key },
+    } = await axios.get(`${server}/razorpaykey`);
+    setKey(key);
     dispatch(buySubscription());
   };
 
