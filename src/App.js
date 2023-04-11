@@ -146,7 +146,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="/paymentfail" element={<PaymentFail />} />
+            <Route path="/paymentfailed" element={<PaymentFail />} />
             <Route path="/paymentsuccess" element={<PaymentSuccess />} />
             <Route path="*" element={<NotFound />} />
 
