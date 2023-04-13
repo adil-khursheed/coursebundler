@@ -1,15 +1,30 @@
-import { Button, Container, Grid, Heading, Image, Input, Select, VStack } from '@chakra-ui/react'
-import React, { useState } from 'react'
-import { fileUploadCss } from '../../auth/Register'
-import Sidebar from '../Sidebar'
-
+import {
+  Button,
+  Container,
+  Grid,
+  Heading,
+  Image,
+  Input,
+  Select,
+  VStack,
+} from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import { fileUploadCss } from '../../auth/Register';
+import Sidebar from '../Sidebar';
+import { useDispatch, useSelector } from 'react-redux';
+import { createCourse } from '../../../redux/actions/adminAction';
+import { toast } from 'react-hot-toast';
 
 const categories = [
-        'Web Development', 'Artificial Intelligence', 'Data Science', 'Data Structure and Algorithm', 'App Development', 'Game Development'
-    ]
+  'Web Development',
+  'Artificial Intelligence',
+  'Data Science',
+  'Data Structure and Algorithm',
+  'App Development',
+  'Game Development',
+];
 
 const CreateCourse = () => {
-
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [createdBy, setCreatedBy] = useState('');
@@ -17,9 +32,12 @@ const CreateCourse = () => {
   const [image, setImage] = useState('');
   const [imagePrev, setImagePrev] = useState('');
 
+  const dispatch = useDispatch();
 
-  const changeImageHandler = (e) => {
-    const file = e.target.files[0]
+  const { loading, error, message } = useSelector(state => state.admin);
+
+  const changeImageHandler = e => {
+    const file = e.target.files[0];
     const reader = new FileReader();
 
     reader.readAsDataURL(file);
@@ -27,49 +45,70 @@ const CreateCourse = () => {
     reader.onloadend = () => {
       setImagePrev(reader.result);
       setImage(file);
+    };
+  };
+
+  const submitHandler = e => {
+    e.preventDefault();
+    const myForm = new FormData();
+
+    myForm.append('title', title);
+    myForm.append('description', description);
+    myForm.append('category', category);
+    myForm.append('createdBy', createdBy);
+    myForm.append('file', image);
+
+    dispatch(createCourse(myForm));
+  };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch({ type: 'clearError' });
     }
-  }
+    if (message) {
+      toast.success(message);
+      dispatch({ type: 'clearMessage' });
+    }
+  }, [error, message, dispatch]);
 
   return (
-    <Grid
-      minH={'100vh'}
-      templateColumns={['1fr','5fr 1fr']}
-    >
+    <Grid minH={'100vh'} templateColumns={['1fr', '5fr 1fr']}>
       <Container py={'16'}>
-        <form>
+        <form onSubmit={submitHandler}>
           <Heading
             textTransform={'uppercase'}
-            children='Create Course'
+            children="Create Course"
             my={'16'}
-            textAlign={['center','left']}
+            textAlign={['center', 'left']}
           />
 
-          <VStack m={'auto'} spacing='8'>
+          <VStack m={'auto'} spacing="8">
             <Input
-              placeholder='Title'
+              placeholder="Title"
               type={'text'}
-              focusBorderColor='purple.300'
+              focusBorderColor="purple.300"
               value={title}
-              onChange={(e)=>setTitle(e.target.value)}
+              onChange={e => setTitle(e.target.value)}
             />
             <Input
-              placeholder='Description'
+              placeholder="Description"
               type={'text'}
-              focusBorderColor='purple.300'
+              focusBorderColor="purple.300"
               value={description}
-              onChange={(e)=>setDescription(e.target.value)}
+              onChange={e => setDescription(e.target.value)}
             />
             <Input
-              placeholder='Creator Name'
+              placeholder="Creator Name"
               type={'text'}
-              focusBorderColor='purple.300'
+              focusBorderColor="purple.300"
               value={createdBy}
-              onChange={(e)=>setCreatedBy(e.target.value)}
+              onChange={e => setCreatedBy(e.target.value)}
             />
             <Select
-              focusBorderColor='purple.300'
+              focusBorderColor="purple.300"
               value={category}
-              onChange={e=>setCategory(e.target.value)}
+              onChange={e => setCategory(e.target.value)}
             >
               <option value="">Category</option>
 
@@ -82,30 +121,27 @@ const CreateCourse = () => {
 
             <Input
               required
-              accept='image/*'
+              accept="image/*"
               type={'file'}
-              focusBorderColor='purple.300'
+              focusBorderColor="purple.300"
               css={{
-                "&::file-selector-button": {
+                '&::file-selector-button': {
                   ...fileUploadCss,
-                  color:'purple',
-                }
+                  color: 'purple',
+                },
               }}
               onChange={changeImageHandler}
             />
 
             {imagePrev && (
-              <Image
-                src={imagePrev}
-                boxSize='64'
-                objectFit={'contain'}
-              />
+              <Image src={imagePrev} boxSize="64" objectFit={'contain'} />
             )}
 
             <Button
+              isLoading={loading}
               w={'full'}
-              colorScheme='purple'
-              type='submit'
+              colorScheme="purple"
+              type="submit"
             >
               Create
             </Button>
@@ -113,9 +149,9 @@ const CreateCourse = () => {
         </form>
       </Container>
 
-      <Sidebar/>
+      <Sidebar />
     </Grid>
-  )
-}
+  );
+};
 
-export default CreateCourse
+export default CreateCourse;
