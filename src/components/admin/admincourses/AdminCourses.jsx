@@ -53,7 +53,13 @@ const AdminCourses = () => {
     console.log(lectureId);
   };
 
-  const addLectureButtonHandler = (e, courseId, title, description, video) => {
+  const addLectureButtonHandler = async (
+    e,
+    courseId,
+    title,
+    description,
+    video
+  ) => {
     e.preventDefault();
     const myForm = new FormData();
 
@@ -61,7 +67,8 @@ const AdminCourses = () => {
     myForm.append('description', description);
     myForm.append('file', video);
 
-    dispatch(addLecture(courseId, myForm));
+    await dispatch(addLecture(courseId, myForm));
+    dispatch(getCourseLectures(courseId));
   };
 
   useEffect(() => {

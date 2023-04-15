@@ -14,7 +14,7 @@ export const updateProfile = (name, email) => async dispatch => {
       },
       {
         headers: {
-          'Content-type': 'application/json',
+          'Content-Type': 'application/json',
         },
         withCredentials: true,
       }
@@ -39,7 +39,7 @@ export const updateProfilePicture = formdata => async dispatch => {
       formdata,
       {
         headers: {
-          'Content-type': 'multipart/form-data',
+          'Content-Type': 'multipart/form-data',
         },
         withCredentials: true,
       }
@@ -67,7 +67,7 @@ export const changePassword = (oldPassword, newPassword) => async dispatch => {
       },
       {
         headers: {
-          'Content-type': 'application/json',
+          'Content-Type': 'application/json',
         },
         withCredentials: true,
       }
@@ -94,7 +94,7 @@ export const forgetPassword = email => async dispatch => {
       },
       {
         headers: {
-          'Content-type': 'application/json',
+          'Content-Type': 'application/json',
         },
         withCredentials: true,
       }
@@ -121,7 +121,7 @@ export const resetPassword = (token, password) => async dispatch => {
       },
       {
         headers: {
-          'Content-type': 'application/json',
+          'Content-Type': 'application/json',
         },
         withCredentials: true,
       }
@@ -148,7 +148,7 @@ export const addToPlaylist = id => async dispatch => {
       },
       {
         headers: {
-          'Content-type': 'application/json',
+          'Content-Type': 'application/json',
         },
         withCredentials: true,
       }

@@ -7,8 +7,8 @@ export const createCourse = formdata => async dispatch => {
     dispatch({ type: 'createCourseRequest' });
 
     const { data } = await axios.post(`${server}/createcourse`, formdata, {
-      header: {
-        'Content-type': 'multipart/from-data',
+      headers: {
+        'Content-Type': 'multipart/form-data',
       },
       withCredentials: true,
     });
@@ -46,13 +46,13 @@ export const addLecture = (id, formdata) => async dispatch => {
     dispatch({ type: 'addLectureRequest' });
 
     const { data } = await axios.post(`${server}/course/${id}`, formdata, {
-      header: {
-        'Content-type': 'multipart/from-data',
+      headers: {
+        'Content-Type': 'multipart/form-data',
       },
       withCredentials: true,
     });
-
     dispatch({ type: 'addLectureSuccess', payload: data.message });
+    console.log(data);
   } catch (error) {
     dispatch({
       type: 'addLectureFail',
