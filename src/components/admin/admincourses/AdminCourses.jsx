@@ -24,7 +24,11 @@ import {
   getAllCourses,
   getCourseLectures,
 } from '../../../redux/actions/courseAction';
-import { addLecture, deleteCourse } from '../../../redux/actions/adminAction';
+import {
+  addLecture,
+  deleteCourse,
+  deleteLecture,
+} from '../../../redux/actions/adminAction';
 import { toast } from 'react-hot-toast';
 
 const AdminCourses = () => {
@@ -48,9 +52,9 @@ const AdminCourses = () => {
     dispatch(deleteCourse(courseId));
   };
 
-  const deleteLectureButtonHandler = (courseId, lectureId) => {
-    console.log(courseId);
-    console.log(lectureId);
+  const deleteLectureButtonHandler = async (courseId, lectureId) => {
+    await dispatch(deleteLecture(courseId, lectureId));
+    dispatch(getCourseLectures(courseId));
   };
 
   const addLectureButtonHandler = async (

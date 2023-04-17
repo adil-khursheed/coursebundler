@@ -42,6 +42,19 @@ export const adminReducer = createReducer(
       state.error = action.payload;
     },
 
+    // Delete Lecture
+    deleteLectureRequest: state => {
+      state.loading = true;
+    },
+    deleteLectureSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload;
+    },
+    deleteLectureFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
     // Clear reducer
     clearError: state => {
       state.error = null;

@@ -23,7 +23,7 @@ const CourseModal = ({
   isOpen,
   onClose,
   id,
-  deleteButtonHandler,
+  deleteLectureButtonHandler,
   courseTitle,
   addLectureButtonHandler,
   lectures = [],
@@ -83,7 +83,7 @@ const CourseModal = ({
                   num={i + 1}
                   lectureId={item._id}
                   courseId={id}
-                  deleteButtonHandler={deleteButtonHandler}
+                  deleteButtonHandler={deleteLectureButtonHandler}
                   loading={loading}
                 />
               ))}
