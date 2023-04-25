@@ -3,6 +3,66 @@ import { createReducer } from '@reduxjs/toolkit';
 export const adminReducer = createReducer(
   {},
   {
+    // Get Dashboard Stats
+    getDashboardStatsRequest: state => {
+      state.loading = true;
+    },
+    getDashboardStatsSuccess: (state, action) => {
+      state.loading = false;
+      state.stats = action.payload.stats;
+      state.viewsCount = action.payload.viewsCount;
+      state.subscriptionCount = action.payload.subscriptionCount;
+      state.usersCount = action.payload.usersCount;
+      state.subscriptionPercentage = action.payload.subscriptionPercentage;
+      state.viewsPercentage = action.payload.viewsPercentage;
+      state.usersPercentage = action.payload.usersPercentage;
+      state.usersProfit = action.payload.usersProfit;
+      state.viewsProfit = action.payload.viewsProfit;
+      state.subscriptionProfit = action.payload.subscriptionProfit;
+    },
+    getDashboardStatsFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    // Get All Users
+    getAllUsersRequest: state => {
+      state.loading = true;
+    },
+    getAllUsersSuccess: (state, action) => {
+      state.loading = false;
+      state.users = action.payload;
+    },
+    getAllUsersFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
+    // Delete User
+    deleteUserRequest: state => {
+      state.loading = true;
+    },
+    deleteUserSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload;
+    },
+    deleteUserFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
+    // Update User Role
+    updateUserRoleRequest: state => {
+      state.loading = true;
+    },
+    updateUserRoleSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload;
+    },
+    updateUserRoleFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
     // Create Course
     createCourseRequest: state => {
       state.loading = true;

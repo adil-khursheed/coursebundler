@@ -79,3 +79,75 @@ export const deleteLecture = (courseId, lectureId) => async dispatch => {
     });
   }
 };
+
+// Get All Users actions
+export const getAllUsers = () => async dispatch => {
+  try {
+    dispatch({ type: 'getAllUsersRequest' });
+
+    const { data } = await axios.get(`${server}/admin/users`, {
+      withCredentials: true,
+    });
+    dispatch({ type: 'getAllUsersSuccess', payload: data.users });
+  } catch (error) {
+    dispatch({
+      type: 'getAllUsersFail',
+      payload: error.response.data.message,
+    });
+  }
+};
+
+// Update User Role actions
+export const updateUserRole = id => async dispatch => {
+  try {
+    dispatch({ type: 'updateUserRoleRequest' });
+
+    const { data } = await axios.put(
+      `${server}/admin/user/${id}`,
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+    dispatch({ type: 'updateUserRoleSuccess', payload: data.message });
+  } catch (error) {
+    dispatch({
+      type: 'updateUserRoleFail',
+      payload: error.response.data.message,
+    });
+  }
+};
+
+// Delete User actions
+export const deleteUser = id => async dispatch => {
+  try {
+    dispatch({ type: 'deleteUserRequest' });
+
+    const { data } = await axios.delete(`${server}/admin/user/${id}`, {
+      withCredentials: true,
+    });
+    dispatch({ type: 'deleteUserSuccess', payload: data.message });
+  } catch (error) {
+    dispatch({
+      type: 'deleteUserFail',
+      payload: error.response.data.message,
+    });
+  }
+};
+
+// Get Dashboard Stats actions
+export const getDashboardStats = () => async dispatch => {
+  try {
+    dispatch({ type: 'getDashboardStatsRequest' });
+
+    const { data } = await axios.get(`${server}/admin/stats`, {
+      withCredentials: true,
+    });
+    dispatch({ type: 'getDashboardStatsSuccess', payload: data });
+  } catch (error) {
+    dispatch({
+      type: 'getDashboardStatsFail',
+      payload: error.response.data.message,
+    });
+  }
+};
